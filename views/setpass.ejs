@@ -1,0 +1,41 @@
+router.post('/password',function(req,res){
+    userModel.findOne({email:req.body.email})
+    .then(function(v){
+      var x=uuidv4()
+      v.s=x
+      v.save()
+      var new1=`https://app-retailshop.herokuapp.com/cretep/${v._id}/${x}`
+      mailer(req.body.email,new1)
+      res.send("done")
+      
+    })
+  })
+  
+  router.get('/cretep/:id/:a',function(req,res){
+    userModel.findOne({_id:req.params.id})
+    .then(function(i){
+      var j=req.params.id
+      if(i.s==req.params.a){
+        res.render('setpass',{j})
+      }
+      else{
+        res.send("not done")
+      }
+    })
+  })
+  
+  router.post('/setpass/:id',function(req,res){
+    userModel.findOne({_id:req.params.id})
+    .then(function(a){
+      if(req.body.password1==req.body.password2){
+        a.setPassword(req.body.password1,function(err){
+          a.save(function(err){
+            console.log(err)
+            res.redirect('/login')
+          })
+        })
+      }else{
+        res.send("enter same password in both field")
+      }
+    })
+  })
