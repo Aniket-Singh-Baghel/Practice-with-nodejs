@@ -5,7 +5,7 @@ const { Passport } = require('passport');
 const passport = require('passport');
 var passportLocalMongoose  =require('passport-local-mongoose');
 
-mongoose.connect('mongodb://localhost/authlogin')
+mongoose.connect('mongodb+srv://aniket_2000:sheryians@123@cluster0.8phqz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 var userSchema=mongoose.Schema({
   username:String,
